@@ -8,13 +8,7 @@ import cv2
 import nibabel as nib
 import matplotlib.pyplot as plt
 
-
-def CreateDirectory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-def ResizeImage(Img, Height, Width, ResizeMethod = cv2.INTER_CUBIC):
-    return cv2.resize(Img, dsize = (Width, Height), interpolation = ResizeMethod)
+from Utilities.GenUtils import CreateDirectory, JoinPaths, ResizeImage
 
 def ReadNii(filepath):
     CTScan = nib.load(filepath).get_fdata()
@@ -96,15 +90,14 @@ def ExtractImages(ImagesPath, SavePath, ScanType = "image", ):
 
 def ProcessLiTSData():
     TrainImagesNames = glob(
-        os.path.join(
-            "",
+        JoinPaths(
+
             "Data\Training Batch 2",
             "volume-*.nii"
             )
     )
     TrainMaskNames = glob(
-        os.path.join(
-            "",
+        JoinPaths(
             "Data\Training Batch 2",
             "segmentation-*.nii"
         )
@@ -114,15 +107,13 @@ def ProcessLiTSData():
         "Train volumes and segmentations are not same in length"
 
     ValImagesNames = glob(
-        os.path.join(
-            "",
+        JoinPaths(
             "Data\Training Batch 1",
             "volume-*.nii"
         )
     )
     ValMaskNames = glob(
-        os.path.join(
-            "",
+        JoinPaths(
             "Data\Training Batch 1",
             "segmentation-*.nii"
         )
@@ -135,20 +126,16 @@ def ProcessLiTSData():
     ValImagesNames = sorted(ValImagesNames)
     ValMaskNames = sorted(ValMaskNames)
 
-    TrainImagesPath = os.path.join(
-        "",
+    TrainImagesPath = JoinPaths(
         "Data\Train\Images"
     )
-    TrainMaskPath = os.path.join(
-        "",
+    TrainMaskPath = JoinPaths(
         "Data\Train\Mask"
     )
-    ValImagesPath = os.path.join(
-        "",
+    ValImagesPath = JoinPaths(
         "Data\Val\Images"
     )
-    ValMaskPath = os.path.join(
-        "",
+    ValMaskPath = JoinPaths(
         "Data\Val\Mask"
     )
 
