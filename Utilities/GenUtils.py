@@ -32,3 +32,49 @@ def ResizeImage(Img, Height, Width, ResizeMethod = cv2.INTER_CUBIC):
 
 def GetGPUsCount():
     return len(tensorflow.config.experimental.list_logical_devices('GPU'))
+
+def ImageToMaskName(ImageName : str):
+    return ImageName.replace('image', 'mask')
+
+def GetDataPaths(Mode : str):
+    ImagesPaths = os.listdir(
+        JoinPaths(
+            "Data\\"+Mode+"\Images"
+        )
+    )
+
+    MaskPaths = [
+        ImageToMaskName(ImageName) for ImageName in ImagesPath
+    ]
+    MaskPaths = [
+        JoinPaths(
+            "Data\\"+Mode+"\Mask",
+            MaskName
+        ) for MaskName in MaskPaths
+    ]
+
+    ImagesPaths = [
+        JoinPaths(
+            "Data\\"+Mode+"\Images",
+            ImageName
+        ) for ImageName in ImagesPath
+    ]
+
+def ReadImage(ImgPath, ColorMode):
+    return cv2.imread(ImgPath, ColorMode)
+
+def PrepareImage(Path : str, NormalizeType : str):
+    Image = ReadImage(Path, cv2.IMREAD_COLOR)
+    Image = cv2.cvtColor(Image, cv2.COLOR_BGR2RGB)
+
+    if NormalizeType == "Normalize":
+        Image = Image / 255.0
+    
+    Image = Image.astype(numpy.float32)
+
+    return Image
+
+def PrepareMask(Path : str):
+    Mask = ReadImage(Path, cv2.IMREAD_GRAYSCALE)
+    Mask = Mask.astype(numpy.int32)
+    return Mask
