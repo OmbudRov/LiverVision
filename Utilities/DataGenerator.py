@@ -25,7 +25,7 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
     
     def OnEpochEnd(Self):
         Self.Indexes = numpy.arrange(len(Self.ImagesPaths))
-        if(Mode == "Image"):
+        if(Self.Mode == "Image"):
             numpy.random.shuffle(Self.Indexes)
     
     def __GetItem__(Self, Index):
