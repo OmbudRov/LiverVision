@@ -1,6 +1,7 @@
 import os 
 import tensorflow
 import cv2
+import numpy
 from glob import glob
 
 def CreateDirectory(Path):
@@ -44,7 +45,7 @@ def GetDataPaths(Mode : str):
     )
 
     MaskPaths = [
-        ImageToMaskName(ImageName) for ImageName in ImagesPath
+        ImageToMaskName(ImageName) for ImageName in ImagesPaths
     ]
     MaskPaths = [
         JoinPaths(
@@ -57,8 +58,9 @@ def GetDataPaths(Mode : str):
         JoinPaths(
             "Data\\"+Mode+"\Images",
             ImageName
-        ) for ImageName in ImagesPath
+        ) for ImageName in ImagesPaths
     ]
+    return ImagesPaths, MaskPaths
 
 def ReadImage(ImgPath, ColorMode):
     return cv2.imread(ImgPath, ColorMode)

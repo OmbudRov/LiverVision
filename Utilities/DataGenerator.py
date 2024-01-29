@@ -2,7 +2,7 @@ import tensorflow
 import numpy
 import os
 
-from Utilities.GenUtils import JoinPaths, SetGPUs, GetGPUsCount, GetDataPaths
+from Utilities.GenUtils import JoinPaths, SetGPUs, GetGPUsCount, GetDataPaths, PrepareImage, PrepareMask
 
 class DataGenerator(tensorflow.keras.utils.Sequence):
     def __init__(Self, Mode : str):
@@ -61,8 +61,8 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
 
             Image, Mask = tensorflow.numpy_function(
                 Self.tf_func,
-                [Image, ],
-                [tensorflow.float32, ]
+                [Image, Mask],
+                [tensorflow.float32, tensorflow.int32]
             )
 
             #Setting Shape incase if it was lost during tensorflow conversion
@@ -84,7 +84,7 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
                 2
             ])
             BatchMasks[i] = Mask
-            return BatchImages, BatchMasks
+        return BatchImages, BatchMasks
     
     @staticmethod
     def tf_func(*args):
