@@ -9,32 +9,31 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
         Self.Mode = Mode
         Self.BatchSize = 2
         numpy.random.seed(73)
-
         DataPaths = GetDataPaths(Mode)
 
         Self.ImagesPaths = DataPaths[0]
         Self.MaskPaths = DataPaths[1]
 
-        Self.OnEpochEnd()
+        Self.on_epoch_end()
 
     def __len__(Self):
-        Self.OnEpochEnd()
+        Self.on_epoch_end()
         return int(numpy.floor(
             len(Self.ImagesPaths) / Self.BatchSize
         ))
     
-    def OnEpochEnd(Self):
-        Self.Indexes = numpy.arrange(len(Self.ImagesPaths))
+    def on_epoch_end(Self):
+        Self.Indexes = numpy.arange(len(Self.ImagesPaths))
         if(Self.Mode == "Image"):
             numpy.random.shuffle(Self.Indexes)
     
-    def __GetItem__(Self, Index):
+    def __getitem__(Self, Index):
         Indexes = Self.Indexes[
             Index * Self.BatchSize : (Index+1) * Self.BatchSize
         ]
-        return Self.__DataGeneration(Indexes)
+        return Self.__data_generation(Indexes)
 
-    def __DataGeneration(Self, Indexes): 
+    def __data_generation(Self, Indexes): 
         BatchImages = numpy.zeros((
             2,
             320,
@@ -49,7 +48,7 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
         ))
 
         for i, Index in enumerate(Indexes):
-            ImgPath = Self.ImagesPath[int(Index)]
+            ImgPath = Self.ImagesPaths[int(Index)]
             MaskPath = Self.MaskPaths[int(Index)]
 
             Image = PrepareImage(
