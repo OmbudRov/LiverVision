@@ -57,11 +57,14 @@ def SaveImages(Scan, save_path, ImgIndex):
 def SaveMask(Scan, SavePath, MaskIndex):
     for Index in range(Scan.shape[-1]):
         NewMaskPath = os.path.join(SavePath, f"mask_{MaskIndex}_{Index}.png")
-        plt.imshow(Scan[:, :, Index], cmap = 'gray')
+        plt.imshow(Scan[:, :, Index], cmap = 'gray', aspect='equal')
         plt.axis('off')
         plt.tight_layout(pad = 0)
         plt.savefig(NewMaskPath, bbox_inches = 'tight', pad_inches = 0)
         plt.close()
+        ScannedImage = cv2.imread(NewMaskPath)
+        ResizedImage = cv2.resize(ScannedImage, (320, 320))
+        cv2.imwrite(NewMaskPath, ResizedImage)
         
 def ExtractImage(ImagePath, SavePath, ScanType = "image", ):
     _, Index = str(Path(ImagePath).stem).split("-")
