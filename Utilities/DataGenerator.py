@@ -36,14 +36,14 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
     def __data_generation(Self, Indexes): 
         BatchImages = numpy.zeros((
             2,
-            320,
-            320,
+            160,
+            160,
             3
         )).astype(numpy.float32)
         BatchMasks = numpy.zeros((
             2,
-            320,
-            320,
+            160,
+            160,
             2
         ))
 
@@ -67,8 +67,8 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
 
             #Setting Shape incase if it was lost during tensorflow conversion
             Image.set_shape([
-                320,
-                320,
+                160,
+                160,
                 3
             ])
             BatchImages[i] = Image
@@ -79,8 +79,8 @@ class DataGenerator(tensorflow.keras.utils.Sequence):
                 dtype = tensorflow.int32
             )
             Mask.set_shape([
-                320,
-                320,
+                160,
+                160,
                 2
             ])
             BatchMasks[i] = Mask

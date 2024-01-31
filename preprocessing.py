@@ -63,7 +63,7 @@ def SaveMask(Scan, SavePath, MaskIndex):
         plt.savefig(NewMaskPath, bbox_inches = 'tight', pad_inches = 0)
         plt.close()
         ScannedImage = cv2.imread(NewMaskPath)
-        ResizedImage = cv2.resize(ScannedImage, (320, 320))
+        ResizedImage = cv2.resize(ScannedImage, (160, 160))
         cv2.imwrite(NewMaskPath, ResizedImage)
         
 def ExtractImage(ImagePath, SavePath, ScanType = "image", ):
@@ -71,8 +71,8 @@ def ExtractImage(ImagePath, SavePath, ScanType = "image", ):
     Scan = ReadNii(ImagePath)
     Scan = ResizeScan(
         Scan,
-        320,
-        320,
+        160,
+        160,
         ScanType
     )
     if ScanType == "image":
