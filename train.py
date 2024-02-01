@@ -48,7 +48,6 @@ def Train():
     print("Logs Path: "+CSVLogPath+"\n")
 
     EvaluationMetric = "val_DiceCoef"
-    print(EvaluationMetric)
     Callbacks = [
         TensorBoard(
             log_dir = TensorboardLogDirectory,
