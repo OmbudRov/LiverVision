@@ -47,10 +47,8 @@ def Train():
     CSVLogPath = JoinPaths("Checkpoints", "TrainingLogs_UNet.csv")
     print("Logs Path: "+CSVLogPath+"\n")
 
-    EvaluationMetric = "ValDiceCoef"
-    if len(model.outputs) > 1:
-        EvaluationMetric = f"Val_{model.output_names[0]}_DiceCoef"
-    
+    EvaluationMetric = "val_DiceCoef"
+    print(EvaluationMetric)
     Callbacks = [
         TensorBoard(
             log_dir = TensorboardLogDirectory,
