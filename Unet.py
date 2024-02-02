@@ -41,7 +41,7 @@ def Unet(InputShape, OutputChannels):
 
     Output = Conv2D(OutputChannels, 1, activation='softmax')(D1)
 
-    model = tf.keras.Model(inputs=InputLayer, outputs=Output, name="ComplexUnet")
+    model = tf.keras.Model(inputs=InputLayer, outputs=Output, name="Unet")
     return model
 
 def PrepareModel():
